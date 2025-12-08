@@ -1,0 +1,1011 @@
+import { useState, useEffect } from "react";
+import "./main.css";
+
+import React from 'react'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import Login from './pages/auth/Login.jsx'
+import Register from './pages/auth/Register.jsx'
+
+// Create a simple Dashboard component for now
+function Dashboard({ role }) {
+  return (
+    <div className="min-h-screen bg-gray-50 p-8">
+          </h1>
+          <p className="text-gray-600 mb-6">
+            This is the {role} dashboard. More features coming soon!
+          </p>
+          <div className="space-x-4">import { useState, useEffect } from 'react'
+import './main.css'
+
+// ============ COMPONENTS ============
+
+function HomePage() {
+  return (
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+      <div className="text-center">
+        <div className="h-20 w-20 rounded-full bg-primary-100 flex items-center justify-center mx-auto mb-6">
+          <span className="text-primary-600 text-2xl font-bold">WL</span>
+        </div>
+        <h1 className="text-4xl font-bold text-primary-600 mb-4">WasteLink</h1>
+        <p className="text-gray-600 text-lg mb-2">AI-driven waste management platform</p>
+        <p className="text-gray-500 text-sm mb-8">Connecting residents, collectors, and communities</p>
+        
+        <div className="space-y-4 max-w-md mx-auto">
+          <button 
+            onClick={() => window.location.hash = '#login'}
+            className="w-full btn-primary py-3 text-lg"
+          >
+            Login to Dashboard
+          </button>
+          <button 
+            onClick={() => window.location.hash = '#register'}
+            className="w-full btn-secondary py-3 text-lg"
+          >
+            Create New Account
+          </button>
+        </div>
+
+        <div className="mt-12">
+          <p className="text-gray-500 mb-4">Try different user roles:</p>
+          <div className="flex flex-wrap gap-3 justify-center">
+            <button 
+              onClick={() => {
+                window.location.hash = '#resident'
+                localStorage.setItem('demoUser', 'resident')
+              }}
+              className="px-6 py-3 bg-green-100 text-green-800 rounded-lg font-medium hover:bg-green-200 transition-colors"
+            >
+              👤 Resident
+            </button>
+            <button 
+              onClick={() => {
+                window.location.hash = '#collector'
+                localStorage.setItem('demoUser', 'collector')
+              }}
+              className="px-6 py-3 bg-yellow-100 text-yellow-800 rounded-lg font-medium hover:bg-yellow-200 transition-colors"
+            >
+              🚚 Collector
+            </button>
+            <button 
+              onClick={() => {
+                window.location.hash = '#admin'
+                localStorage.setItem('demoUser', 'admin')
+              }}
+              className="px-6 py-3 bg-blue-100 text-blue-800 rounded-lg font-medium hover:bg-blue-200 transition-colors"
+            >
+              ⚙️ Admin
+            </button>
+          </div>
+        </div>
+
+        <div className="mt-12 pt-8 border-t border-gray-200">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm text-gray-600">
+            <div>
+              <h3 className="font-medium text-gray-900 mb-2">🌱 Eco-Friendly</h3>
+              <p>Reduce landfill waste through smart recycling</p>
+            </div>
+            <div>
+              <h3 className="font-medium text-gray-900 mb-2">🤖 AI-Powered</h3>
+              <p>Smart routing and waste classification</p>
+            </div>
+            <div>
+              <h3 className="font-medium text-gray-900 mb-2">👥 Community</h3>
+              <p>Creating jobs, connecting people</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function LoginPage() {
+  const [form, setForm] = useState({ email: '', password: '' })
+  const [loading, setLoading] = useState(false)
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    setLoading(true)
+    
+    // Mock login - determine role from email
+    setTimeout(() => {
+      setLoading(false)
+      const email = form.email.toLowerCase()
+      
+      if (email.includes('collector')) {
+        window.location.hash = '#collector'
+      } else if (email.includes('admin')) {
+        window.location.hash = '#admin'
+      } else {
+        window.location.hash = '#resident'
+      }
+    }, 1000)
+  }
+
+  const handleDemoLogin = (role) => {
+    const emails = {
+      resident: 'john.doe@example.com',
+      collector: 'jane.collector@example.com',
+      admin: 'admin@wastelink.com'
+    }
+    setForm({ email: emails[role], password: 'password123' })
+  }
+
+  return (
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+      <div className="card w-full max-w-md">
+        <div className="card-header">
+          <button 
+            onClick={() => window.location.hash = ''}
+            className="text-primary-600 hover:text-primary-700 mb-4 inline-flex items-center"
+          >
+            ← Back
+          </button>
+          <h2 className="text-2xl font-bold text-gray-900">Welcome Back</h2>
+          <p className="text-gray-600 text-sm mt-1">Sign in to your WasteLink account</p>
+        </div>
+        
+        <div className="card-body">
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Email Address
+              </label>
+              <input
+                type="email"
+                value={form.email}
+                onChange={(e) => setForm({...form, email: e.target.value})}
+                className="input-field"
+                placeholder="you@example.com"
+                required
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Password
+              </label>
+              <input
+                type="password"
+                value={form.password}
+                onChange={(e) => setForm({...form, password: e.target.value})}
+                className="input-field"
+                placeholder="••••••••"
+                required
+              />
+            </div>
+
+            <button 
+              type="submit" 
+              className="w-full btn-primary py-3"
+              disabled={loading}
+            >
+              {loading ? 'Signing in...' : 'Sign In'}
+            </button>
+          </form>
+
+          <div className="mt-8 pt-6 border-t border-gray-200">
+            <p className="text-sm text-gray-600 mb-4">Quick demo access:</p>
+            <div className="grid grid-cols-3 gap-3">
+              <button
+                onClick={() => handleDemoLogin('resident')}
+                className="py-2 px-3 bg-green-50 text-green-700 rounded-lg text-sm font-medium hover:bg-green-100 transition-colors"
+              >
+                Resident
+              </button>
+              <button
+                onClick={() => handleDemoLogin('collector')}
+                className="py-2 px-3 bg-yellow-50 text-yellow-700 rounded-lg text-sm font-medium hover:bg-yellow-100 transition-colors"
+              >
+                Collector
+              </button>
+              <button
+                onClick={() => handleDemoLogin('admin')}
+                className="py-2 px-3 bg-blue-50 text-blue-700 rounded-lg text-sm font-medium hover:bg-blue-100 transition-colors"
+              >
+                Admin
+              </button>
+            </div>
+          </div>
+
+          <div className="mt-8 text-center">
+            <p className="text-sm text-gray-600">
+              Don't have an account?{' '}
+              <button 
+                onClick={() => window.location.hash = '#register'}
+                className="text-primary-600 hover:text-primary-700 font-medium"
+              >
+                Sign up here
+              </button>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function RegisterPage() {
+  const [form, setForm] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    password: '',
+    confirmPassword: '',
+    role: 'resident',
+    apartment: ''
+  })
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    if (form.password !== form.confirmPassword) {
+      alert('Passwords do not match!')
+      return
+    }
+    alert(`Account created for ${form.name} (${form.role})`)
+    window.location.hash = '#login'
+  }
+
+  const handleChange = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value
+    })
+  }
+
+  return (
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+      <div className="card w-full max-w-md">
+        <div className="card-header">
+          <button 
+            onClick={() => window.location.hash = ''}
+            className="text-primary-600 hover:text-primary-700 mb-4 inline-flex items-center"
+          >
+            ← Back
+          </button>
+          <h2 className="text-2xl font-bold text-gray-900">Create Account</h2>
+          <p className="text-gray-600 text-sm mt-1">Join the WasteLink community</p>
+        </div>
+        
+        <div className="card-body">
+          <form onSubmit={handleSubmit} className="space-y-5">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Full Name
+              </label>
+              <input
+                type="text"
+                name="name"
+                value={form.name}
+                onChange={handleChange}
+                className="input-field"
+                placeholder="John Doe"
+                required
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Email Address
+              </label>
+              <input
+                type="email"
+                name="email"
+                value={form.email}
+                onChange={handleChange}
+                className="input-field"
+                placeholder="you@example.com"
+                required
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Phone Number
+              </label>
+              <input
+                type="tel"
+                name="phone"
+                value={form.phone}
+                onChange={handleChange}
+                className="input-field"
+                placeholder="+254 7XX XXX XXX"
+                required
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Account Type
+              </label>
+              <select
+                name="role"
+                value={form.role}
+                onChange={handleChange}
+                className="input-field"
+              >
+                <option value="resident">Resident (Request waste pickups)</option>
+                <option value="collector">Collector (Collect waste)</option>
+                <option value="admin">Admin (Manage system)</option>
+              </select>
+            </div>
+
+            {form.role === 'resident' && (
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Apartment/Building
+                </label>
+                <input
+                  type="text"
+                  name="apartment"
+                  value={form.apartment}
+                  onChange={handleChange}
+                  className="input-field"
+                  placeholder="A101 or Building Name"
+                />
+              </div>
+            )}
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Password
+              </label>
+              <input
+                type="password"
+                name="password"
+                value={form.password}
+                onChange={handleChange}
+                className="input-field"
+                placeholder="••••••••"
+                required
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Confirm Password
+              </label>
+              <input
+                type="password"
+                name="confirmPassword"
+                value={form.confirmPassword}
+                onChange={handleChange}
+                className="input-field"
+                placeholder="••••••••"
+                required
+              />
+            </div>
+
+            <button type="submit" className="w-full btn-primary py-3">
+              Create Account
+            </button>
+          </form>
+
+          <div className="mt-8 text-center">
+            <p className="text-sm text-gray-600">
+              Already have an account?{' '}
+              <button 
+                onClick={() => window.location.hash = '#login'}
+                className="text-primary-600 hover:text-primary-700 font-medium"
+              >
+                Sign in here
+              </button>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// ============ DASHBOARD COMPONENTS ============
+
+function DashboardLayout({ title, children, role }) {
+  return (
+    <div className="min-h-screen bg-gray-50">
+      {/* Navigation */}
+      <nav className="bg-white shadow-sm border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            <div className="flex items-center">
+              <button 
+                onClick={() => window.location.hash = ''}
+                className="text-gray-700 hover:text-gray-900 mr-4"
+              >
+                ←
+              </button>
+              <div>
+                <h1 className="text-xl font-bold text-gray-900">{title}</h1>
+                <p className="text-sm text-gray-600">WasteLink {role} Portal</p>
+              </div>
+            </div>
+            <div className="flex items-center space-x-4">
+              <span className={`badge ${
+                role === 'resident' ? 'badge-success' :
+                role === 'collector' ? 'badge-warning' : 'badge-info'
+              }`}>
+                {role}
+              </span>
+              <button 
+                onClick={() => window.location.hash = ''}
+                className="btn-secondary text-sm"
+              >
+                Logout
+              </button>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {children}
+      </main>
+    </div>
+  )
+}
+
+function ResidentDashboard() {
+  const [wasteType, setWasteType] = useState('')
+  const [volume, setVolume] = useState('')
+
+  const stats = [
+    { label: 'Total Requests', value: '24', change: '+3', color: 'primary' },
+    { label: 'Completed', value: '18', change: '+2', color: 'green' },
+    { label: 'Pending', value: '6', change: '+1', color: 'yellow' },
+    { label: 'Recycled (kg)', value: '145', change: '+25', color: 'blue' },
+  ]
+
+  const requests = [
+    { id: 1, type: 'Plastic', status: 'Pending', time: 'Today, 10:30 AM' },
+    { id: 2, type: 'Organic', status: 'Completed', time: 'Yesterday, 2:15 PM' },
+    { id: 3, type: 'Mixed', status: 'Scheduled', time: 'Tomorrow, 9:00 AM' },
+  ]
+
+  return (
+    <DashboardLayout title="Resident Dashboard" role="resident">
+      {/* Stats */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        {stats.map((stat, idx) => (
+          <div key={idx} className={`card p-4 bg-${stat.color}-50`}>
+            <div className="text-sm font-medium text-gray-600">{stat.label}</div>
+            <div className="flex items-baseline mt-2">
+              <div className={`text-2xl font-bold text-${stat.color}-700`}>{stat.value}</div>
+              <div className="ml-2 text-sm text-green-600">↑ {stat.change}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        {/* Left Column */}
+        <div className="lg:col-span-2 space-y-6">
+          {/* Request Pickup */}
+          <div className="card">
+            <div className="card-header">
+              <h2 className="text-xl font-bold text-gray-900">Request Waste Pickup</h2>
+            </div>
+            <div className="card-body space-y-6">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-3">
+                  Waste Type
+                </label>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                  {['Plastic', 'Organic', 'Metal', 'Glass', 'Mixed', 'E-Waste'].map(type => (
+                    <button
+                      key={type}
+                      onClick={() => setWasteType(type)}
+                      className={`py-3 px-4 border rounded-lg transition-all ${
+                        wasteType === type 
+                          ? 'border-primary-500 bg-primary-50 text-primary-700' 
+                          : 'border-gray-300 hover:border-gray-400'
+                      }`}
+                    >
+                      {type}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-3">
+                  Estimated Volume
+                </label>
+                <div className="grid grid-cols-3 gap-3">
+                  {['Small (1-5kg)', 'Medium (5-20kg)', 'Large (20+kg)'].map((size, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => setVolume(size)}
+                      className={`py-3 px-4 border rounded-lg transition-all ${
+                        volume === size 
+                          ? 'border-primary-500 bg-primary-50 text-primary-700' 
+                          : 'border-gray-300 hover:border-gray-400'
+                      }`}
+                    >
+                      {size.split(' ')[0]}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Additional Notes
+                </label>
+                <textarea 
+                  className="input-field h-32" 
+                  placeholder="Any special instructions for the collector..."
+                />
+              </div>
+
+              <button className="w-full btn-primary py-3 text-lg">
+                Submit Pickup Request
+              </button>
+            </div>
+          </div>
+
+          {/* Recent Activity */}
+          <div className="card">
+            <div className="card-header">
+              <h2 className="text-xl font-bold text-gray-900">Recent Activity</h2>
+            </div>
+            <div className="card-body">
+              <div className="space-y-4">
+                {requests.map(req => (
+                  <div key={req.id} className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:bg-gray-50">
+                    <div className="flex items-center space-x-4">
+                      <div className={`h-10 w-10 rounded-full flex items-center justify-center ${
+                        req.status === 'Completed' ? 'bg-green-100 text-green-600' :
+                        req.status === 'Pending' ? 'bg-yellow-100 text-yellow-600' :
+                        'bg-blue-100 text-blue-600'
+                      }`}>
+                        {req.status === 'Completed' ? '✓' : req.status === 'Pending' ? '⏱' : '📅'}
+                      </div>
+                      <div>
+                        <div className="font-medium">{req.type} Waste</div>
+                        <div className="text-sm text-gray-500">{req.time}</div>
+                      </div>
+                    </div>
+                    <span className={`badge ${
+                      req.status === 'Completed' ? 'badge-success' :
+                      req.status === 'Pending' ? 'badge-warning' : 'badge-info'
+                    }`}>
+                      {req.status}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Right Column */}
+        <div className="space-y-6">
+          {/* Profile */}
+          <div className="card">
+            <div className="card-header">
+              <h2 className="text-xl font-bold text-gray-900">Your Profile</h2>
+            </div>
+            <div className="card-body">
+              <div className="space-y-4">
+                <div className="flex items-center space-x-3">
+                  <div className="h-12 w-12 rounded-full bg-primary-100 flex items-center justify-center">
+                    <span className="text-primary-600 font-bold">JD</span>
+                  </div>
+                  <div>
+                    <div className="font-medium">John Doe</div>
+                    <div className="text-sm text-gray-500">Apartment A101</div>
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-600">Member Since:</span>
+                    <span className="font-medium">Nov 2023</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-600">Rating:</span>
+                    <span className="font-medium">⭐ 4.8/5</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-600">Carbon Saved:</span>
+                    <span className="font-medium text-green-600">25kg CO₂</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* AI Tips */}
+          <div className="card">
+            <div className="card-header">
+              <h2 className="text-xl font-bold text-gray-900">🤖 AI Tips</h2>
+            </div>
+            <div className="card-body">
+              <div className="space-y-3">
+                <div className="p-3 bg-green-50 rounded-lg border border-green-200">
+                  <p className="text-sm text-green-800">
+                    <span className="font-medium">Segregation Tip:</span> Separate plastic bottles from caps
+                  </p>
+                </div>
+                <div className="p-3 bg-blue-50 rounded-lg border border-blue-200">
+                  <p className="text-sm text-blue-800">
+                    <span className="font-medium">Best Time:</span> Request between 9-11 AM for fastest service
+                  </p>
+                </div>
+                <div className="p-3 bg-purple-50 rounded-lg border border-purple-200">
+                  <p className="text-sm text-purple-800">
+                    <span className="font-medium">Impact:</span> You've helped recycle 145kg this month!
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </DashboardLayout>
+  )
+}
+
+function CollectorDashboard() {
+  const stats = [
+    { label: "Today's Tasks", value: '8', color: 'primary' },
+    { label: 'Completed', value: '5', color: 'green' },
+    { label: 'Earnings', value: 'Ksh 2,150', color: 'yellow' },
+    { label: 'Rating', value: '4.9/5', color: 'blue' },
+  ]
+
+  const tasks = [
+    { id: 1, location: 'A101', type: 'Plastic', status: 'In Progress', time: '30 min', pay: 'Ksh 250' },
+    { id: 2, location: 'B205', type: 'Organic', status: 'Pending', time: '45 min', pay: 'Ksh 200' },
+    { id: 3, location: 'C312', type: 'Mixed', status: 'Completed', time: '20 min', pay: 'Ksh 300' },
+  ]
+
+  return (
+    <DashboardLayout title="Collector Dashboard" role="collector">
+      {/* Stats */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        {stats.map((stat, idx) => (
+          <div key={idx} className={`card p-4 bg-${stat.color}-50`}>
+            <div className="text-sm font-medium text-gray-600">{stat.label}</div>
+            <div className="text-2xl font-bold mt-2">{stat.value}</div>
+          </div>
+        ))}
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        {/* Left Column */}
+        <div className="lg:col-span-2 space-y-6">
+          {/* Current Task */}
+          <div className="card">
+            <div className="card-header">
+              <h2 className="text-xl font-bold text-gray-900">Current Task</h2>
+            </div>
+            <div className="card-body">
+              <div className="p-6 bg-primary-50 rounded-lg border-2 border-primary-200">
+                <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+                  <div>
+                    <h3 className="font-bold text-xl text-primary-900">Apartment A101 • Plastic Waste</h3>
+                    <div className="flex items-center space-x-4 mt-2 text-primary-700">
+                      <span>📍 1.2km away</span>
+                      <span>⏱️ 15 min remaining</span>
+                      <span>💰 Ksh 250</span>
+                    </div>
+                    <div className="mt-4 space-y-2">
+                      <div className="flex items-center text-sm">
+                        <span className="w-24 text-gray-600">Volume:</span>
+                        <span className="font-medium">Medium (8kg)</span>
+                      </div>
+                      <div className="flex items-center text-sm">
+                        <span className="w-24 text-gray-600">Notes:</span>
+                        <span className="font-medium">Bags at door, please ring bell</span>
+                      </div>
+                    </div>
+                  </div>
+                  <button className="btn-primary px-8 py-3 whitespace-nowrap">
+                    Mark Complete
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Task List */}
+          <div className="card">
+            <div className="card-header">
+              <h2 className="text-xl font-bold text-gray-900">Upcoming Tasks</h2>
+            </div>
+            <div className="card-body">
+              <div className="space-y-4">
+                {tasks.map(task => (
+                  <div key={task.id} className="flex flex-col sm:flex-row sm:items-center justify-between p-4 border border-gray-200 rounded-lg hover:bg-gray-50">
+                    <div className="mb-3 sm:mb-0">
+                      <div className="font-bold text-lg">{task.location}</div>
+                      <div className="text-sm text-gray-600 mt-1">
+                        {task.type} • {task.time} • {task.pay}
+                      </div>
+                    </div>
+                    <div className="flex items-center space-x-3">
+                      <span className={`badge ${
+                        task.status === 'Completed' ? 'badge-success' :
+                        task.status === 'Pending' ? 'badge-warning' : 'badge-info'
+                      }`}>
+                        {task.status}
+                      </span>
+                      <button className="btn-primary text-sm px-4 py-2">
+                        {task.status === 'Pending' ? 'Start' : 'View'}
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Right Column */}
+        <div className="space-y-6">
+          {/* Route Info */}
+          <div className="card">
+            <div className="card-header">
+              <h2 className="text-xl font-bold text-gray-900">📍 Today's Route</h2>
+            </div>
+            <div className="card-body">
+              <div className="h-48 bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg flex flex-col items-center justify-center">
+                <div className="text-5xl mb-2">🗺️</div>
+                <p className="font-medium text-blue-800">AI-Optimized Route</p>
+                <p className="text-sm text-blue-600 mt-1">5 stops • 8.5km • 2h 15m est.</p>
+              </div>
+              <div className="mt-4 grid grid-cols-3 gap-4 text-center">
+                <div>
+                  <div className="font-bold text-lg">5</div>
+                  <div className="text-sm text-gray-600">Stops</div>
+                </div>
+                <div>
+                  <div className="font-bold text-lg">8.5km</div>
+                  <div className="text-sm text-gray-600">Distance</div>
+                </div>
+                <div>
+                  <div className="font-bold text-lg">2h 15m</div>
+                  <div className="text-sm text-gray-600">Time</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* AI Optimization */}
+          <div className="card">
+            <div className="card-header">
+              <h2 className="text-xl font-bold text-gray-900">⚡ AI Optimization</h2>
+            </div>
+            <div className="card-body">
+              <ul className="space-y-3">
+                <li className="flex items-start">
+                  <div className="flex-shrink-0 h-5 w-5 text-green-500 mt-0.5">✓</div>
+                  <p className="ml-3 text-sm text-gray-600">Route optimized for fuel efficiency</p>
+                </li>
+                <li className="flex items-start">
+                  <div className="flex-shrink-0 h-5 w-5 text-yellow-500 mt-0.5">⚠️</div>
+                  <p className="ml-3 text-sm text-gray-600">Heavy traffic expected in 30min</p>
+                </li>
+                <li className="flex items-start">
+                  <div className="flex-shrink-0 h-5 w-5 text-blue-500 mt-0.5">💡</div>
+                  <p className="ml-3 text-sm text-gray-600">Suggested break: 2:00 PM</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </DashboardLayout>
+  )
+}
+
+function AdminDashboard() {
+  const stats = [
+    { label: 'Total Users', value: '1,245', color: 'primary' },
+    { label: 'Active Collectors', value: '42', color: 'green' },
+    { label: "Today's Requests", value: '89', color: 'blue' },
+    { label: 'Completion Rate', value: '94%', color: 'purple' },
+  ]
+
+  return (
+    <DashboardLayout title="Admin Dashboard" role="admin">
+      {/* Stats */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        {stats.map((stat, idx) => (
+          <div key={idx} className={`card p-4 bg-${stat.color}-50`}>
+            <div className="text-sm font-medium text-gray-600">{stat.label}</div>
+            <div className="text-2xl font-bold mt-2">{stat.value}</div>
+          </div>
+        ))}
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        {/* Left Column */}
+        <div className="lg:col-span-2 space-y-6">
+          {/* System Overview */}
+          <div className="card">
+            <div className="card-header">
+              <h2 className="text-xl font-bold text-gray-900">System Overview</h2>
+            </div>
+            <div className="card-body">
+              <div className="space-y-6">
+                {/* Waste Distribution */}
+                <div>
+                  <h3 className="font-medium text-gray-900 mb-3">Waste Distribution</h3>
+                  <div className="space-y-2">
+                    {[
+                      { type: 'Plastic', percent: 35, color: 'bg-blue-500' },
+                      { type: 'Organic', percent: 40, color: 'bg-green-500' },
+                      { type: 'Metal', percent: 12, color: 'bg-yellow-500' },
+                      { type: 'Glass', percent: 8, color: 'bg-purple-500' },
+                    ].map(item => (
+                      <div key={item.type} className="flex items-center">
+                        <span className="w-24 text-sm text-gray-600">{item.type}</span>
+                        <div className="flex-1 ml-4">
+                          <div className="h-3 bg-gray-200 rounded-full overflow-hidden">
+                            <div 
+                              className={`h-full ${item.color} rounded-full`}
+                              style={{ width: `${item.percent}%` }}
+                            />
+                          </div>
+                        </div>
+                        <span className="w-12 text-right text-sm font-medium">{item.percent}%</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Performance */}
+                <div>
+                  <h3 className="font-medium text-gray-900 mb-3">Performance Metrics</h3>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="p-4 bg-gray-50 rounded-lg">
+                      <div className="text-sm text-gray-600">Avg. Response Time</div>
+                      <div className="text-xl font-bold mt-1">18 min</div>
+                    </div>
+                    <div className="p-4 bg-gray-50 rounded-lg">
+                      <div className="text-sm text-gray-600">Customer Rating</div>
+                      <div className="text-xl font-bold mt-1">4.7/5</div>
+                    </div>
+                    <div className="p-4 bg-gray-50 rounded-lg">
+                      <div className="text-sm text-gray-600">Recycling Rate</div>
+                      <div className="text-xl font-bold mt-1">78%</div>
+                    </div>
+                    <div className="p-4 bg-gray-50 rounded-lg">
+                      <div className="text-sm text-gray-600">CO₂ Saved</div>
+                      <div className="text-xl font-bold mt-1">1.2T</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Right Column */}
+        <div className="space-y-6">
+          {/* AI Insights */}
+          <div className="card">
+            <div className="card-header">
+              <h2 className="text-xl font-bold text-gray-900">🤖 AI Insights</h2>
+            </div>
+            <div className="card-body">
+              <div className="space-y-4">
+                <div className="p-3 bg-blue-50 rounded-lg border border-blue-200">
+                  <p className="text-sm text-blue-800">
+                    <span className="font-medium">Peak Demand:</span> 9-11 AM, add 3 more collectors
+                  </p>
+                </div>
+                <div className="p-3 bg-green-50 rounded-lg border border-green-200">
+                  <p className="text-sm text-green-800">
+                    <span className="font-medium">Success:</span> Recycling rate up 12% this week
+                  </p>
+                </div>
+                <div className="p-3 bg-yellow-50 rounded-lg border border-yellow-200">
+                  <p className="text-sm text-yellow-800">
+                    <span className="font-medium">Alert:</span> Area B3 needs more collectors
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Quick Actions */}
+          <div className="card">
+            <div className="card-header">
+              <h2 className="text-xl font-bold text-gray-900">Quick Actions</h2>
+            </div>
+            <div className="card-body">
+              <div className="space-y-3">
+                <button className="w-full btn-primary">
+                  Manage Users
+                </button>
+                <button className="w-full btn-secondary">
+                  View Reports
+                </button>
+                <button className="w-full btn-secondary">
+                  System Settings
+                </button>
+                <button className="w-full btn-secondary">
+                  Add Collector
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </DashboardLayout>
+  )
+}
+
+// ============ MAIN APP ============
+
+function App() {
+  const [currentView, setCurrentView] = useState('home')
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.replace('#', '') || 'home'
+      setCurrentView(hash)
+    }
+
+    handleHashChange()
+    window.addEventListener('hashchange', handleHashChange)
+    
+    return () => window.removeEventListener('hashchange', handleHashChange)
+  }, [])
+
+  switch(currentView) {
+    case 'login':
+      return <LoginPage />
+    case 'register':
+      return <RegisterPage />
+    case 'resident':
+      return <ResidentDashboard />
+    case 'collector':
+      return <CollectorDashboard />
+    case 'admin':
+      return <AdminDashboard />
+    default:
+      return <HomePage />
+  }
+}
+
+export default App
+            <button onClick={() => window.location.href = '/'} className="btn-secondary">
+              Logout
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={
+          <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+            <div className="text-center">
+              <h1 className="text-4xl font-bold text-primary-600 mb-4">WasteLink</h1>
+              <p className="text-gray-600">AI-driven waste management platform</p>
+              <div className="mt-6 space-x-4">
+                <a href="/login" className="btn-primary inline-block">Login</a>
+                <a href="/register" className="btn-secondary inline-block">Register</a>
+              </div>
+            </div>
+          </div>
+        } />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/resident/dashboard" element={<Dashboard role="Resident" />} />
+        <Route path="/collector/dashboard" element={<Dashboard role="Collector" />} />
+        <Route path="/admin/dashboard" element={<Dashboard role="Admin" />} />
+      </Routes>
+    </BrowserRouter>
+  )
+}
+
+export default App
