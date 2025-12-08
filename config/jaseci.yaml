@@ -1,0 +1,46 @@
+# WasteLink Configuration
+version: "1.0"
+
+# BYLLM AI Configuration
+byllm:
+  openai_api_key: ${OPENAI_API_KEY}
+  default_model: "gpt-4o"
+  vision_model: "gpt-4o"
+  temperature: 0.1
+
+# Google Maps Configuration
+google_maps:
+  api_key: ${GOOGLE_MAPS_API_KEY}
+  zoom_level: 14
+  map_type: "roadmap"
+
+# Database Configuration
+database:
+  type: "sqlite"
+  path: "data/wastelink.db"
+  pragmas:
+    journal_mode: "WAL"
+    foreign_keys: "ON"
+
+# API Server
+server:
+  port: 8000
+  host: "0.0.0.0"
+  cors_origins: ["*"]
+
+# Authentication
+auth:
+  jwt_secret: ${JWT_SECRET}
+  token_expiry_hours: 24
+
+# Fixed Pricing (KES)
+pricing:
+  resident_payment: 500
+  collector_earnings: 300
+  system_fee: 200
+
+# System Settings
+system:
+  max_distance_km: 10
+  auto_assign_enabled: true
+  notification_enabled: true
