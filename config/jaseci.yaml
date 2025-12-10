@@ -1,46 +1,72 @@
-# WasteLink Configuration
-version: "1.0"
+# ==============================================================
+# WasteLink — Jaseci Core Configuration
+# ==============================================================
 
-# BYLLM AI Configuration
+# ----------------------------------------------------------------
+# 1. Core Runtime Settings
+# ----------------------------------------------------------------
+root: /
+log_level: INFO
+debug: false
+auto_login: true
+
+# ----------------------------------------------------------------
+# 2. Auto-load Main Jac File (entry point)
+# ----------------------------------------------------------------
+scripts:
+  - "../jac_code/main.jac"
+
+# ----------------------------------------------------------------
+# 3. Module Import Paths
+# ----------------------------------------------------------------
+module_paths:
+  - "../jac_code/nodes"
+  - "../jac_code/walkers"
+  - "../byllm_models"
+  - "../geo_client"
+
+# ----------------------------------------------------------------
+# 4. BYLLM / LLM Configuration
+# ----------------------------------------------------------------
 byllm:
-  openai_api_key: ${OPENAI_API_KEY}
   default_model: "gpt-4o"
-  vision_model: "gpt-4o"
-  temperature: 0.1
+  openai:
+    api_key: "${OPENAI_API_KEY}"     # Load from environment variable
 
-# Google Maps Configuration
-google_maps:
-  api_key: ${GOOGLE_MAPS_API_KEY}
-  zoom_level: 14
-  map_type: "roadmap"
+# Optional: If you want to switch to DeepSeek or others later:
+# deepseek:
+#   api_key: "${DEEPSEEK_API_KEY}"
 
-# Database Configuration
+# ----------------------------------------------------------------
+# 5. SQLite Database Configuration
+# ----------------------------------------------------------------
 database:
-  type: "sqlite"
-  path: "data/wastelink.db"
-  pragmas:
-    journal_mode: "WAL"
-    foreign_keys: "ON"
+  engine: sqlite
+  path: "../data/wastelink.db"
 
-# API Server
-server:
-  port: 8000
+# ----------------------------------------------------------------
+# 6. Secrets & External API Keys
+# ----------------------------------------------------------------
+secrets:
+  google_maps_api_key: "${GOOGLE_MAPS_API_KEY}"
+
+# ----------------------------------------------------------------
+# 7. HTTP Client Defaults
+# ----------------------------------------------------------------
+http:
+  timeout_seconds: 20
+  retry_attempts: 2
+
+# ----------------------------------------------------------------
+# 8. API Server Settings (Optional)
+# ----------------------------------------------------------------
+api:
   host: "0.0.0.0"
-  cors_origins: ["*"]
+  port: 8000
+  enable_cors: true
 
-# Authentication
-auth:
-  jwt_secret: ${JWT_SECRET}
-  token_expiry_hours: 24
-
-# Fixed Pricing (KES)
-pricing:
-  resident_payment: 500
-  collector_earnings: 300
-  system_fee: 200
-
-# System Settings
-system:
-  max_distance_km: 10
-  auto_assign_enabled: true
-  notification_enabled: true
+# ----------------------------------------------------------------
+# 9. Scheduler (Optional)
+# ----------------------------------------------------------------
+scheduler:
+  enabled: false
