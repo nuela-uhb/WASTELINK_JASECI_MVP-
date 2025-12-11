@@ -14,16 +14,16 @@ auto_login: true
 # 2. Auto-load Main Jac File (entry point)
 # ----------------------------------------------------------------
 scripts:
-  - "../jac_code/main.jac"
+  - "jac_code/main.jac"
 
 # ----------------------------------------------------------------
 # 3. Module Import Paths
 # ----------------------------------------------------------------
 module_paths:
-  - "../jac_code/nodes"
-  - "../jac_code/walkers"
-  - "../byllm_models"
-  - "../geo_client"
+  - "jac_code/nodes"
+  - "jac_code/walkers"
+  - "jac_code/geo_client"
+  - "jac_code/byllm_models"
 
 # ----------------------------------------------------------------
 # 4. BYLLM / LLM Configuration
@@ -31,18 +31,14 @@ module_paths:
 byllm:
   default_model: "gpt-4o"
   openai:
-    api_key: "${OPENAI_API_KEY}"     # Load from environment variable
-
-# Optional: If you want to switch to DeepSeek or others later:
-# deepseek:
-#   api_key: "${DEEPSEEK_API_KEY}"
+    api_key: "${OPENAI_API_KEY}"
 
 # ----------------------------------------------------------------
 # 5. SQLite Database Configuration
 # ----------------------------------------------------------------
 database:
   engine: sqlite
-  path: "../data/wastelink.db"
+  path: "data/wastelink.db"
 
 # ----------------------------------------------------------------
 # 6. Secrets & External API Keys
@@ -58,7 +54,7 @@ http:
   retry_attempts: 2
 
 # ----------------------------------------------------------------
-# 8. API Server Settings (Optional)
+# 8. API Server Settings
 # ----------------------------------------------------------------
 api:
   host: "0.0.0.0"
