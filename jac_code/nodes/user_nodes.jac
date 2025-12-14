@@ -1,3 +1,5 @@
+import from datetime { datetime }
+
 # Base User node
 node User {
     has email: str;

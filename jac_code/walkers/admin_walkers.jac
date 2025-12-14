@@ -1,9 +1,13 @@
-walker AdminActions {
-    can manage_users with Admin entry {
-        print(f"{here.full_name} is managing users");
-    }
+import from nodes.user_nodes { Resident, Collector }
+import from nodes.logistics_nodes { PickupRequest }
 
-    can get_system_overview with Admin entry {
-        print(f"{here.full_name} is viewing system metrics");
+# Walker to get a quick system summary
+walker system_overview {
+    can overview with `root entry {
+        report {
+            "residents": len([root --> Resident]),
+            "collectors": len([root --> Collector]),
+            "requests": len([root --> PickupRequest])
+        };
     }
 }

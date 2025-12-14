@@ -1,68 +1,60 @@
-# ==============================================================
-# WasteLink — Jaseci Core Configuration
-# ==============================================================
+# ================================
+# Wastelink – Jac Cloud Config
+# ================================
 
-# ----------------------------------------------------------------
-# 1. Core Runtime Settings
-# ----------------------------------------------------------------
-root: /
-log_level: INFO
-debug: false
-auto_login: true
+version: "1.0"
 
-# ----------------------------------------------------------------
-# 2. Auto-load Main Jac File (entry point)
-# ----------------------------------------------------------------
-scripts:
-  - "jac_code/main.jac"
+# ----------------
+# Runtime
+# ----------------
+runtime:
+  mode: service            # REQUIRED for automatic persistence
+  auto_reload: true
+  logging:
+    level: INFO
 
-# ----------------------------------------------------------------
-# 3. Module Import Paths
-# ----------------------------------------------------------------
-module_paths:
-  - "jac_code/nodes"
-  - "jac_code/walkers"
-  - "jac_code/geo_client"
-  - "jac_code/byllm_models"
+# ----------------
+# Persistence
+# ----------------
+persistence:
+  enabled: true
+  auto_migrate: true       # Jac manages storage internally
+  # No backend
+  # No sqlite
+  # No database URI
 
-# ----------------------------------------------------------------
-# 4. BYLLM / LLM Configuration
-# ----------------------------------------------------------------
-byllm:
-  default_model: "gpt-4o"
-  openai:
-    api_key: "${OPENAI_API_KEY}"
-
-# ----------------------------------------------------------------
-# 5. SQLite Database Configuration
-# ----------------------------------------------------------------
-database:
-  engine: sqlite
-  path: "data/wastelink.db"
-
-# ----------------------------------------------------------------
-# 6. Secrets & External API Keys
-# ----------------------------------------------------------------
-secrets:
-  google_maps_api_key: "${GOOGLE_MAPS_API_KEY}"
-
-# ----------------------------------------------------------------
-# 7. HTTP Client Defaults
-# ----------------------------------------------------------------
-http:
-  timeout_seconds: 20
-  retry_attempts: 2
-
-# ----------------------------------------------------------------
-# 8. API Server Settings
-# ----------------------------------------------------------------
-api:
-  host: "0.0.0.0"
+# ----------------
+# API Server
+# ----------------
+server:
+  host: 0.0.0.0
   port: 8000
-  enable_cors: true
+  cors:
+    enabled: true
+    allow_origins: ["*"]
+  docs:
+    enabled: true
 
-# ----------------------------------------------------------------
-# 9. Scheduler (Optional)
-# ----------------------------------------------------------------
-scheduler:
-  enabled: false
+# ----------------
+# byLLM (OpenAI ONLY)
+# ----------------
+byllm:
+  enabled: true
+  default_model: gpt-4o
+  providers:
+    openai:
+      api_key_env: OPENAI_API_KEY
+
+# ----------------
+# External Services
+# ----------------
+external_services:
+  maps:
+    provider: google_maps
+    api_key_env: GOOGLE_MAPS_API_KEY
+
+# ----------------
+# Dev Tools
+# ----------------
+devtools:
+  inspector: true
